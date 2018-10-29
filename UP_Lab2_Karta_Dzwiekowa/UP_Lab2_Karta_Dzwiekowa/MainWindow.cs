@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using SlimDX.DirectSound;
-using SlimDX.Multimedia;
 
 namespace UP_Lab2_Karta_Dzwiekowa
 {
@@ -60,7 +51,7 @@ namespace UP_Lab2_Karta_Dzwiekowa
             }
             catch (Exception)
             {
-                //Jak się nie da zastopować to trudno 
+                //Jak się nie da zatrzymać to nic nie rób 
             }
         }
 

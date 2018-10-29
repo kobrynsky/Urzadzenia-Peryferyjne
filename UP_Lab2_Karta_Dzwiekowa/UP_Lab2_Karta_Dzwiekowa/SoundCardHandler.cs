@@ -1,15 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Media;
 using System.Windows.Forms;
-using SharpDX.Multimedia;
 using SlimDX.DirectSound;
 using SlimDX.Multimedia;
 using BufferFlags = SlimDX.DirectSound.BufferFlags;
 using CooperativeLevel = SlimDX.DirectSound.CooperativeLevel;
 using DirectSound = SlimDX.DirectSound.DirectSound;
-using LockFlags = SharpDX.DirectSound.LockFlags;
-using PlayFlags = SharpDX.DirectSound.PlayFlags;
 using SecondarySoundBuffer = SlimDX.DirectSound.SecondarySoundBuffer;
 using SoundBufferDescription = SlimDX.DirectSound.SoundBufferDescription;
 
@@ -17,16 +13,12 @@ namespace UP_Lab2_Karta_Dzwiekowa
 {
     public class SoundCardHandler
     {
-        private const int NumberChannels = 2;
-        private const int SamplesPerSecs = 44100;
-
         public static string FilePath { get; set; }
-        public static string FileName { get; set; }
-        public static System.Media.SoundPlayer Player;
+        public static SoundPlayer Player;
 
         public static void Play()
         {
-            Player = new System.Media.SoundPlayer(FilePath);
+            Player = new SoundPlayer(FilePath);
             Player.Play();
         }
 
@@ -83,7 +75,8 @@ namespace UP_Lab2_Karta_Dzwiekowa
 
 
                     var directorySound = new DirectSound();
-                    directorySound.SetCooperativeLevel(window.Handle, CooperativeLevel.Priority);
+                    directorySound.SetCooperativeLevel(window.Handle,
+                                                        CooperativeLevel.Priority);
 
                     var secondarySoundBuffer = new SecondarySoundBuffer(directorySound, desc);
 
@@ -96,8 +89,8 @@ namespace UP_Lab2_Karta_Dzwiekowa
                         var data = new byte[desc.SizeInBytes];
                         file.Read(data, 0, (int)file.Length);
 
-                        secondarySoundBuffer.Write(data, 0, SlimDX.DirectSound.LockFlags.None);
-                        secondarySoundBuffer.Play(0, SlimDX.DirectSound.PlayFlags.None);
+                        secondarySoundBuffer.Write(data, 0, LockFlags.None);
+                        secondarySoundBuffer.Play(0, PlayFlags.None);
 
                         checkBoxEcho.Enabled = false;
                     }
