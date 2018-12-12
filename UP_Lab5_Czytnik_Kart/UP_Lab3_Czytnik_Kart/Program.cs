@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UP_Lab3_Drukarka_atramentowa
+namespace UP_Lab3_Czytnik_Kart
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace UP_Lab3_Drukarka_atramentowa
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            Application.Run(new FormMain());
         }
     }
 }
