@@ -37,11 +37,11 @@ namespace UP_Lab3_Czytnik_Kart
             {
                 Connect();
 
-                //wysłanie kolejnych komend do czytnika, celem programu jest odczytanie SMSa
-                //poruszanie sie po poszczególnych poziomach:
+                //wysylanie kolejnych komend do czytnika, celem programu jest odczytanie SMSa
+                //poruszanie sie po poszczegolnych poziomach:
 
                 // wejscie w galaz telecom:
-                commandB = new byte[] { 0xA0, 0xA4, 0x00, 0x00, 0x02, 0x7F, 0x10 }; // adres złożony z 2 znaków 107F
+                commandB = new byte[] { 0xA0, 0xA4, 0x00, 0x00, 0x02, 0x7F, 0x10 }; // adres złozony z 2 znakow 107F
                 SendCommand(commandB, "SELECT(TELECOM)");
 
                 Console.WriteLine("Odpowiedz TELECOMU\n");
@@ -69,24 +69,10 @@ namespace UP_Lab3_Czytnik_Kart
 
         private void Connect()
         {
-            //            context = new SCardContext(); //nawiązanie połączenia z czytnikiem
-            //
-            //
-            //            Console.WriteLine("polaczone: ");
-            //            var firstReader = context.GetReaders().FirstOrDefault(); // wczytanie dostępnych czytników do listy
-            //            Boolean noReaders = firstReader == null;
-            //            if (noReaders)
-            //            {
-            //                throw new PCSCException(SCardError.NoReadersAvailable, "brak czytnika");
-            //            }
-            //
-            //            reader = new SCardReader(context);
-
             context = new SCardContext();
             context.Establish(SCardScope.System);
             var readerNames = context.GetReaders();
             reader = new SCardReader(context);
-            //context.Release();
             error = reader.Connect(readerNames.FirstOrDefault(), SCardShareMode.Shared, SCardProtocol.T0 | SCardProtocol.T1);
             CheckError(error);
             if (reader.ActiveProtocol == SCardProtocol.T0)
@@ -103,7 +89,6 @@ namespace UP_Lab3_Czytnik_Kart
                 Console.WriteLine("nie obslugiwany protokol");
             }
 
-
             richTextBoxSmsHexResponse.Text = hexText;
         }
 
@@ -113,23 +98,16 @@ namespace UP_Lab3_Czytnik_Kart
             if (error != SCardError.Success)
             {
                 MessageBox.Show(SCardHelper.StringifyError(error));
-                // throw new PCSCException(error, SCardHelper.StringifyError(error));
             }
         }
 
-        public static void SendCommand(byte[] command, String name) // przesyłanie komend do karty
+        public static void SendCommand(byte[] command, String name) // przesylanie komend do karty
         {
             hexText = "";
             byte[] recivedBytes = new byte[256];
             error = reader.Transmit(intptr, command, ref recivedBytes);
             CheckError(error);
             WriteResponse(recivedBytes, name);
-
-//            foreach (var recivedByte in recivedBytes)
-//            {
-//                hexText += recivedByte.ToString();
-//            }
-        //    hexText = Encoding.Default.GetString(recivedBytes);
         }
 
         public static void WriteResponse(byte[] recivedBytes, String responseCode)//odczytanie odpowiedzi z karty
@@ -139,7 +117,6 @@ namespace UP_Lab3_Czytnik_Kart
             for (int i = 0; i < recivedBytes.Length; i++)
             {
                 Console.Write("{0:X2} ", recivedBytes[i]); // wypisanie odpowiedzi binarnie
-              //  hexText += ("{0:X2} ", recivedBytes[i]);
             }
 
             Console.WriteLine();
